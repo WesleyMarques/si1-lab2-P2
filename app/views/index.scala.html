@@ -8,15 +8,15 @@
 	<h2>Lista de metas semanais</h2>
 	<br> <br>
 	<div class="panel-group" id="accordion">
-		
+	@for(a<-1 to 6){
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4 class="panel-title">
 					<a data-toggle="collapse" data-parent="#accordion"
-						href="#collapseOne"> Semana N</a>
+						href="#collapse@a"> Semana @a</a>
 				</h4>
 			</div>
-			<div id="collapseOne" class="panel-collapse collapse in">
+			<div id="#collapse@a" class="panel-collapse collapse in">
 				<div class="panel-body">
 					<div class="table-hover">
 						<table class="table">
@@ -31,7 +31,7 @@
 			</div>
 			<h3>Você possui N atividade a serem concluidas</h3>
 		</div>
-		
+		}
 
 	</div>
 
