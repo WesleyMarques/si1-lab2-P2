@@ -13,5 +13,10 @@ public class Application extends Controller {
     public static Result index() {
         return ok(index.render("Metas Pessoais"));
     }
+    
+    public static Result metas(){
+    	return ok(index.render(Meta.all(), taskForm, "Metas Pessoais"));
+    	
+    }
 
 }

@@ -52,7 +52,7 @@ public class Meta extends Model {
 		
 	}
 	
-	public static List<Meta> all(int nWeek){
+	public static List<Meta> all(){
 		return find.orderBy("priority").where("week = "+nWeek).findList();
 	}
 	

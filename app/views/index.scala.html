@@ -1,22 +1,24 @@
-@(message: String) @main("Lista de Metas") {
+@(tasks: List[Meta], taskForm: Form[Meta]) 
+@import helper._
+@main("Lista de Metas") {
 <div class="jumbotron">
 	<div class="container">
-		<h1>@message</h1>
+		<h1>Metas Pessoais</h1>
 	</div>
 </div>
 <div class="container">
 	<h2>Lista de metas semanais</h2>
 	<br> <br>
 	<div class="panel-group" id="accordion">
-	@for(a<-1 to 6){
-		<div class="panel panel-default">
+			@for(a<-1 to 6){
+			<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4 class="panel-title">
 					<a data-toggle="collapse" data-parent="#accordion"
 						href="#collapse@a"> Semana @a</a>
 				</h4>
 			</div>
-			<div id="#collapse@a" class="panel-collapse collapse in">
+			<div id="collapse@a" class="panel-collapse collapse in">
 				<div class="panel-body">
 					<div class="table-hover">
 						<table class="table">
@@ -29,11 +31,20 @@
 					</div>
 				</div>
 			</div>
-			<h3>Você possui N atividade a serem concluidas</h3>
-		</div>
-		}
-
+			</div>
+			}
+		
 	</div>
+	<br>
+	<br>
+	<div class="adicionar">
+    <h2>Adicionar uma nova META</h2>
+    @form(routes.Application.newTask()) { 
+    	@inputText(taskForm("description"), '_label -> "Qual é a meta")
+        @inputText(taskForm("priority"), '_label -> "Prioridade da Meta(0-5)")
+        @inputText(taskForm("project"), '_label -> "Semana(1-6)")  
+        <input type="submit" value="Adicionar">
+     </div>
 
 </div>
 }
