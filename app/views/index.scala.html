@@ -1,4 +1,4 @@
-@(tasks: List[Meta], metaForm: Form[Meta]) 
+@(metas: List[Meta], metaForm: Form[Meta]) 
 @import helper._ 
 @main("Lista de Metas"){
 <div class="jumbotron">
@@ -27,7 +27,7 @@
 					<div class="table-hover">
 						<table class="table">
 						<tr class="info"><td>META</td><td>Apagar</td><td>Feito</td> </tr>
-							@for(meta <- Meta.all()){ 
+							@for(meta <- metas){ 
 							@if(meta.isDone() && meta.getWeek() == a){
 							<tr class="success">
 								<td>@meta.getNameMeta()</td>

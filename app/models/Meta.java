@@ -1,15 +1,16 @@
 package models;
 
-import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import play.data.validation.Constraints.Required;
-import play.db.ebean.Model;
 
 @Entity
-public class Meta extends Model {
+public class Meta{
 	
 	public static final int ALTA = 1;
 	public static final int MEDIA = 2;
@@ -17,9 +18,10 @@ public class Meta extends Model {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name = "META_SEQUENCE", sequenceName = "META_SEQUENCE", allocationSize = 1, initialValue = 0)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private long id;
 
 	@Required
@@ -31,30 +33,7 @@ public class Meta extends Model {
 	@Required
 	private int week; //0-6
 	
-	private boolean isDone;
-	
-	public static Finder<Long, Meta> find = new Finder<Long, Meta>(Long.class,
-			Meta.class);
-	
-	public static List<Meta> all(){
-		return find.orderBy("priority").findList();
-	}
-	
-	public static void create(Meta meta) {
-		meta.save();
-	}
-
-	
-	public static void markAsDone(Long id) {
-		Meta meta = find.byId(id);
-		meta.setDone(true);
-		meta.update();
-	}
-
-	
-	public static void delete(Long id) {
-		find.ref(id).delete();
-	}
+	private boolean isDone = false;
 	/**
 	 * @return the priority
 	 */
@@ -107,8 +86,8 @@ public class Meta extends Model {
 	/**
 	 * @param isDone the isDone to set
 	 */
-	public void setDone(boolean isDone) {
-		this.isDone = isDone;
+	public void setDone() {
+		this.isDone = true;
 	}
 
 	/**

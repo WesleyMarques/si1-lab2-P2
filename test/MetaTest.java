@@ -1,7 +1,6 @@
 import static org.junit.Assert.*;
 import models.Meta;
 
-import org.dom4j.tree.AbstractText;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,11 +42,7 @@ public class MetaTest{
 
 	@Test
 	public void deveCriarMetatest() {
-		meta.setNameMeta("wesley");
-		meta.setPriority(1);
-		meta.setWeek(1);
-		meta.create(meta);
-		assertTrue(meta.all().size()!=0);		
+				
 	}
 
 }

@@ -1,20 +1,25 @@
 package controllers;
 
+import models.DAO;
 import models.Meta;
 import play.*;
 import play.data.Form;
+import play.db.jpa.Transactional;
 import play.mvc.*;
 import views.html.*;
 
 public class Application extends Controller {
 	
 	static Form<Meta> taskForm = Form.form(Meta.class);
+	private static DAO dao = new DAO();
 
+	@Transactional
     public static Result index() {
-    	initBD();
+		initBD();
         return redirect(routes.Application.metas());
     }
     
+	@Transactional
     private static void initBD(){
     	Meta meta;
     	String[] nome = {"Wesley", "Ricardo", "Luis", "Fernando", "Pedro", "Thiago"};
@@ -25,32 +30,37 @@ public class Application extends Controller {
     		meta.setNameMeta(nome[i]);
     		meta.setPriority(priority[i]);
     		meta.setWeek(semana[i]);    		
-    		Meta.create(meta);    					
+    		dao.persist(meta);
+    		dao.flush();
 		}
+
     }
-    
+	@Transactional
     public static Result metas(){
-    	return ok(views.html.index.render(Meta.all(), taskForm));
+    	return ok(views.html.index.render(dao.all(), taskForm));
     	
     }
-    
+	@Transactional
     public static Result newMeta() {
 		  Form<Meta> filledForm = taskForm.bindFromRequest();
 		  if(filledForm.hasErrors()) {
-		    return badRequest(views.html.index.render(Meta.all(), filledForm));
+		    return badRequest(views.html.index.render(dao.all(), filledForm));
 		  } else {
-		    Meta.create(filledForm.get());
+		    dao.persist(filledForm.get());
+		    dao.flush();
 		    return redirect(routes.Application.metas());  
 		  }
 	  }
-    
+	@Transactional
     public static Result deleteMeta(Long id) {
-		  Meta.delete(id);
+		  dao.delete(id);
+		  dao.flush();
 		  return redirect(routes.Application.metas());	
 	  }
-    
+	@Transactional
     public static Result markMetaAsDone(Long id) {
-		  Meta.markAsDone(id);
+		  dao.update(id);
+		  dao.flush();
 		  return redirect(routes.Application.metas());	
 	  }
 
