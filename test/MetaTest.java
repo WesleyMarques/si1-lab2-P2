@@ -1,11 +1,13 @@
 import static org.junit.Assert.*;
 import models.Meta;
 
+import org.dom4j.tree.AbstractText;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.persistence.EntityManager;
+
 
 
 import play.db.jpa.JPA;
@@ -15,17 +17,14 @@ import play.test.Helpers;
 import scala.Option;
 
 
-public class MetaTest {
+public class MetaTest{
 	
-	private Meta meta;
+	private Meta meta = new Meta();
 	public EntityManager em;
+	
 
 	@Before
 	public void setUp() throws Exception {
-		meta = new Meta();
-		meta.setNameMeta("Estudar 1");
-		meta.setPriority(1);
-		meta.setWeek(1);
 		FakeApplication app = Helpers.fakeApplication();
         Helpers.start(app);
         Option<JPAPlugin> jpaPlugin = app.getWrappedApplication().plugin(JPAPlugin.class);
@@ -37,11 +36,16 @@ public class MetaTest {
 
 	@After
 	public void tearDown() throws Exception {
-		meta = null;
+		em.getTransaction().commit();
+        JPA.bindForCurrentThread(null);
+        em.close();
 	}
 
 	@Test
 	public void deveCriarMetatest() {
+		meta.setNameMeta("wesley");
+		meta.setPriority(1);
+		meta.setWeek(1);
 		meta.create(meta);
 		assertTrue(meta.all().size()!=0);		
 	}

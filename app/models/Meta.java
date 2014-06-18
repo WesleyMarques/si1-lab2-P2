@@ -11,6 +11,9 @@ import play.db.ebean.Model;
 @Entity
 public class Meta extends Model {
 	
+	public static final int ALTA = 1;
+	public static final int MEDIA = 2;
+	public static final int BAIXA = 3;	
 	/**
 	 * 
 	 */
@@ -32,25 +35,6 @@ public class Meta extends Model {
 	
 	public static Finder<Long, Meta> find = new Finder<Long, Meta>(Long.class,
 			Meta.class);
-	
-	/**
-	 * @param nWeek
-	 * @return List<Meta>
-	 */
-	public static List<Meta> allDoneByWeek(int nWeek) {
-		return find.orderBy("week,priority").where("isDone = TRUE AND week = "+nWeek).findList();
-		
-	}
-	
-	/**
-	 * 
-	 * @param nWeek
-	 * @return
-	 */
-	public static List<Meta> allUnDoneByWeek(int nWeek) {
-		return find.orderBy("priority").where("isDone = FALSE AND week = "+nWeek).findList();
-		
-	}
 	
 	public static List<Meta> all(){
 		return find.orderBy("priority").findList();

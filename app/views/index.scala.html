@@ -18,7 +18,11 @@
 						href="#collapse@a"> Semana @a</a>
 				</h4>
 			</div>
-			<div id="collapse@a" class="panel-collapse collapse in">
+			@if(a == 1){
+				<div id="collapse@a" class="panel-collapse collapse in">
+			} else {
+			 	<div id="collapse@a" class="panel-collapse collapse">
+			}
 				<div class="panel-body">
 					<div class="table-hover">
 						<table class="table">
