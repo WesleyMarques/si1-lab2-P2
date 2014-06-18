@@ -20,7 +20,7 @@ public class Meta extends Model {
 	private long id;
 
 	@Required
-	private int priority;// vai de 0 - 5
+	private int priority;// vai de 1 - 3
 	
 	@Required
 	private String nameMeta;
@@ -38,7 +38,7 @@ public class Meta extends Model {
 	 * @return List<Meta>
 	 */
 	public static List<Meta> allDoneByWeek(int nWeek) {
-		return find.orderBy("priority").where("isDone = TRUE AND week = "+nWeek).findList();
+		return find.orderBy("week,priority").where("isDone = TRUE AND week = "+nWeek).findList();
 		
 	}
 	
@@ -53,13 +53,24 @@ public class Meta extends Model {
 	}
 	
 	public static List<Meta> all(){
-		return find.orderBy("priority").where("week = "+nWeek).findList();
+		return find.orderBy("priority").findList();
 	}
 	
 	public static void create(Meta meta) {
 		meta.save();
 	}
 
+	
+	public static void markAsDone(Long id) {
+		Meta meta = find.byId(id);
+		meta.setDone(true);
+		meta.update();
+	}
+
+	
+	public static void delete(Long id) {
+		find.ref(id).delete();
+	}
 	/**
 	 * @return the priority
 	 */
