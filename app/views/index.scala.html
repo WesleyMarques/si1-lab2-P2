@@ -22,15 +22,18 @@
 				<div class="panel-body">
 					<div class="table-hover">
 						<table class="table">
+						<tr class="info"><td>META</td><td>Apagar</td><td>Feito</td> </tr>
 							@for(meta <- Meta.all()){ 
 							@if(meta.isDone() && meta.getWeek() == a){
 							<tr class="success">
 								<td>@meta.getNameMeta()</td>
+								
 								<td>
 								@form(routes.Application.deleteMeta(meta.getId())) { 
 								<input type="submit" value="Apagar"> 
 								}
 								</td>
+								<td>OK</td>
 							</tr>
 							} @if(!meta.isDone() && meta.getWeek() == a){
 							<tr class="danger">
@@ -42,7 +45,7 @@
 								</td>
 								<td>
 								@form(routes.Application.markMetaAsDone(meta.getId())){
-								 <input type="submit" value="Já fiz"> 
+								 <input type="submit" value="Feito"> 
 								 }
 								</td>
 							</tr>
@@ -60,10 +63,11 @@
 	<br> <br>
 	<div>
 		<h2>Adicionar uma nova META</h2>
-		@form(routes.Application.newMeta()) { @inputText(metaForm("nameMeta"),
-		'_label -> "Qual é a meta") @inputText(metaForm("priority"), '_label
-		-> "Prioridade da Meta(1-3)") @inputText(metaForm("week"), '_label ->
-		"Semana(1-6)") <input type="submit" value="Adicionar"> }
+		@form(routes.Application.newMeta()) { 
+		@inputText(metaForm("nameMeta"),'_label -> "Diga sua meta") 
+		@inputText(metaForm("priority"), '_label-> "Prioridade da Meta(1-3)") 
+		@inputText(metaForm("week"), '_label -> "Semana(1-6)") 
+		<input type="submit" value="Adicionar"> }
 	</div>
 
 </div>
